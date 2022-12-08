@@ -21,7 +21,6 @@ def tela_login():
 
 def tela_logado():
     sg.theme('Reddit')
-    save_login(valores['Usuario'], valores['Senha'])
     Layout = [
         [sg.Text('LOGADO')],
         [sg.Button('OK')],
@@ -39,14 +38,16 @@ def tela_recusado():
 
 janela1, janela2, janela3 = tela_login(), None, None
 
+def conf_login ():
+    if valores['Usuario'] == 'Cadu' and valores['Senha'] == 'senha':
+        return True
+
 while True :
     window, eventos, valores = sg.read_all_windows()
     if window == janela1:
         if eventos == sg.WIN_CLOSED:
             break
         if eventos == 'Entrar' and conf_login() == True:
-            if valores['Salvar login?'] == True:
-                save_login(valores['Usuario'], valores['Senha'])
             janela2 = tela_logado()
             janela1.close()
         if eventos == 'Entrar' and conf_login() != True:
@@ -55,12 +56,14 @@ while True :
     if window == janela2:
         if eventos == 'OK':
             janela2.close()
+            break
     if window == janela3:
         if eventos == 'Voltar':
             janela1.un_hide()
             janela3.close()
         if eventos == 'Fechar':
             janela3.close()
+            break
 
 
 
